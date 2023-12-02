@@ -4,7 +4,7 @@
 
  DATABASES need for this app
 
- -User([Id],Name, DateOfBirth, UserID)
+ -User([Id],Name, DateOfBirth, Phone_Number)
  
  -Bus(Id, Number, Route_Id, Date)
  
