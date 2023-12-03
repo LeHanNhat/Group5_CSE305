@@ -8,7 +8,7 @@
  
  -Bus(Id, Number, Route_Id, Date)
  
- -Routes(Id, Start, Stop, Distance, Time,Price,Bus_Stop,Date)
+ -Routes(Route_Id, Start, Stop, Distance, Time,Price,Bus_Stop,Date)
  
  -Manager(Id,Name,DOB)
  
