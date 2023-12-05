@@ -116,6 +116,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Show"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showPasswordCheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="roleComboBox">
       <Properties>
@@ -139,6 +142,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="REGISTER"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registerButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
