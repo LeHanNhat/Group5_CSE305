@@ -1,4 +1,4 @@
-package Quy;
+package entity;
 import java.util.*;
 public class Bus  {
     private String Bus_ID;
