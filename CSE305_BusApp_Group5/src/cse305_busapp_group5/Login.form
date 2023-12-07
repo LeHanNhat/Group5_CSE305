@@ -37,7 +37,7 @@
                   <Group type="102" attributes="0">
                       <Component id="showPasswordCheckBox" min="-2" pref="85" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="roleComboBox" pref="110" max="32767" attributes="0"/>
+                      <Component id="cmbRole" pref="110" max="32767" attributes="0"/>
                   </Group>
                   <Component id="userNameTextFields" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -69,7 +69,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="showPasswordCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="roleComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmbRole" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -111,13 +111,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="passwordField">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="showPasswordCheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Show"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showPasswordCheckBoxActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JComboBox" name="roleComboBox">
+    <Component class="javax.swing.JComboBox" name="cmbRole">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="2">
@@ -126,6 +132,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbRoleActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -134,11 +143,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="LOGIN"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="registerButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="REGISTER"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registerButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

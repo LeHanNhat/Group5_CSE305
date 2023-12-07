@@ -4,6 +4,12 @@
  */
 package cse305_busapp_group5;
 
+import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author LEONOVO
@@ -13,8 +19,12 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    public Login() {
+    private String adclass;
+
+    private Login() {
         initComponents();
+             addListener();
+           
     }
 
     /**
@@ -32,7 +42,7 @@ public class Login extends javax.swing.JFrame {
         Password = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
         showPasswordCheckBox = new javax.swing.JCheckBox();
-        roleComboBox = new javax.swing.JComboBox<>();
+        cmbRole = new javax.swing.JComboBox<>();
         loginButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
 
@@ -51,13 +61,39 @@ public class Login extends javax.swing.JFrame {
 
         Password.setText("Password");
 
-        showPasswordCheckBox.setText("Show");
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
 
-        roleComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Manager" }));
+        showPasswordCheckBox.setText("Show");
+        showPasswordCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showPasswordCheckBoxActionPerformed(evt);
+            }
+        });
+
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Manager" }));
+        cmbRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbRoleActionPerformed(evt);
+            }
+        });
 
         loginButton.setText("LOGIN");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         registerButton.setText("REGISTER");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,7 +111,7 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(showPasswordCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(roleComboBox, 0, 110, Short.MAX_VALUE))
+                        .addComponent(cmbRole, 0, 110, Short.MAX_VALUE))
                     .addComponent(userNameTextFields)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
@@ -100,7 +136,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(showPasswordCheckBox)
-                    .addComponent(roleComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -117,6 +153,128 @@ public class Login extends javax.swing.JFrame {
     private void userNameTextFieldsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTextFieldsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userNameTextFieldsActionPerformed
+
+    private void showPasswordCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordCheckBoxActionPerformed
+
+    }//GEN-LAST:event_showPasswordCheckBoxActionPerformed
+
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+      if(cmbRole.getSelectedIndex()==0){
+          Register_user_dialog register_user=new Register_user_dialog(this, true);
+          register_user.setVisible(true);
+      }else{
+       Register_dialog register=new Register_dialog(this, true);
+      register.setVisible(true);
+      }
+    }//GEN-LAST:event_registerButtonActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+      char[] password= passwordField.getPassword();
+      String passString=new String(password);
+       if(cmbRole.getSelectedIndex()==0){
+        if( loginValidation("root", "mysql",userNameTextFields.getText(), passString)){
+            System.out.println("login done");
+        }else{
+           System.out.println("login Error"); 
+        }
+       }else{
+            if( loginValidationManager("root", "mysql",userNameTextFields.getText())){
+            System.out.println("login done");
+        }else{
+           System.out.println("login Error"); 
+        }
+       }
+    }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
+         if(cmbRole.getSelectedIndex()==1){
+                 passwordField.setVisible(false);
+                 Password.setVisible(false);
+                 showPasswordCheckBox.setVisible(false);
+             }else{
+            passwordField.setVisible(true);
+                 Password.setVisible(true);
+                 showPasswordCheckBox.setVisible(true);
+         }
+    }//GEN-LAST:event_cmbRoleActionPerformed
+    public void addListener() {
+        showPasswordCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (showPasswordCheckBox.isSelected()) {
+                    passwordField.setEchoChar((char) 0);
+                } else {
+                    passwordField.setEchoChar('\u2022');
+                }
+            }
+        });
+    }
+
+    private boolean checkConnection(String acc, String pass) throws ClassNotFoundException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/project";
+         Connection con = DriverManager.getConnection(url, acc, pass);
+            con.close();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    private boolean loginValidation(String acc, String pass,String userName,String password){
+        boolean condition=true;  
+        try {
+              String query = "SELECT * FROM bus_app.user WHERE name=? AND password=?";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/bus_app";
+         Connection con = DriverManager.getConnection(url, acc, pass);
+         PreparedStatement st=con.prepareStatement(query);
+         st.setString(1, userName);
+         st.setString(2, password);
+             ResultSet rs= st.executeQuery();
+             if(rs.next()){
+                 System.out.println("have");
+                 condition=true;
+             }else{
+                 System.out.println("dont have");
+                 condition=false;
+             }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return condition;
+    }
+    private boolean loginValidationManager(String acc,String pass,String name){
+        boolean condition=true;  
+        try {
+              String query = "SELECT * FROM bus_app.manager WHERE name=?";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/bus_app";
+         Connection con = DriverManager.getConnection(url, acc, pass);
+         PreparedStatement st=con.prepareStatement(query);
+         st.setString(1, name);
+        
+             ResultSet rs= st.executeQuery();
+             if(rs.next()){
+                 System.out.println("have");
+                 condition=true;
+             }else{
+                 System.out.println("dont have");
+                 condition=false;
+             }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return condition;
+    }
 
     /**
      * @param args the command line arguments
@@ -155,12 +313,12 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Password;
+    private javax.swing.JComboBox<String> cmbRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JButton registerButton;
-    private javax.swing.JComboBox<String> roleComboBox;
     private javax.swing.JCheckBox showPasswordCheckBox;
     private javax.swing.JTextField userNameTextFields;
     // End of variables declaration//GEN-END:variables
