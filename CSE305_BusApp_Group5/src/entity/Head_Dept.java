@@ -1,4 +1,4 @@
-package Quy;
+package entity;
 import java.util.ArrayList;
 
 public class Head_Dept {
