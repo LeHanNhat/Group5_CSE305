@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package cse305_busapp_group5;
+package Manager;
 
-import Quy.App_Manager;
+import AccountSite.Login;
+import entity.App_Manager;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -15,7 +16,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Administrator
  */
-public class manager_window extends javax.swing.JFrame {
+public class Manager extends javax.swing.JFrame {
 
     private App_Manager manager;
     private String username = "root";
@@ -24,7 +25,7 @@ public class manager_window extends javax.swing.JFrame {
     /**
      * Creates new form main_window
      */
-    public manager_window(App_Manager manager) {
+    public Manager(App_Manager manager) {
         initComponents();
         this.manager = manager;
         showCustomer();
@@ -170,9 +171,8 @@ public class manager_window extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(cmbElement, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmbTable, javax.swing.GroupLayout.Alignment.LEADING, 0, 115, Short.MAX_VALUE))
+                            .addComponent(cmbElement, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbTable, 0, 115, Short.MAX_VALUE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
                             .addComponent(jScrollPane2))
                         .addContainerGap(29, Short.MAX_VALUE))
@@ -319,7 +319,7 @@ public class manager_window extends javax.swing.JFrame {
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         // TODO add your handling code here:
-        log_in_window returnWin = new log_in_window();
+        Login returnWin = new Login();
         this.dispose();
         returnWin.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_btnReturnActionPerformed
@@ -335,9 +335,7 @@ public class manager_window extends javax.swing.JFrame {
         System.out.println(cmbTable.getSelectedIndex());
         switch (cmbTable.getSelectedIndex()) {
             case 0:
-                employee_function_window ud = new employee_function_window(0, acc, pass);
-                ud.readData(string);
-                ud.setVisible(true);
+                
             case 1:
 
         }
