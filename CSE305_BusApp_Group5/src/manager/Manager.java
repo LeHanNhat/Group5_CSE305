@@ -4,8 +4,9 @@
  */
 package manager;
 
-import app.log_in_window;
-import employee.customer_function_window;
+import accountSite.*;
+import bus.InsertBus;
+import entity.*;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -16,18 +17,19 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Administrator
  */
-public class manager extends javax.swing.JFrame {
+public class Manager extends javax.swing.JFrame {
 
-    private String acc;
-    private String pass;
+    private SqlInfomation newSql;
+    private App_Manager manager1;
 
     /**
      * Creates new form main_window
      */
-    public manager(String acc, String pass) {
+    public Manager(App_Manager manager) {
         initComponents();
-        this.acc = acc;
-        this.pass = pass;
+        this.manager1 = manager;
+        this.newSql = new SqlInfomation();
+        this.jbManager.setText("Manager " + manager1.getName());
     }
 
     /**
@@ -53,8 +55,8 @@ public class manager extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnReturn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblManager1 = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
+        tblCustomer = new javax.swing.JTable();
+        jbManager = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,7 +79,7 @@ public class manager extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblManager);
 
         jLabel1.setFont(new java.awt.Font("Sitka Text", 3, 18)); // NOI18N
-        jLabel1.setText("Manager");
+        jLabel1.setText("CUSTOMER");
 
         btnInsert.setText("INSERT");
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +88,7 @@ public class manager extends javax.swing.JFrame {
             }
         });
 
-        btnUpdate.setText("UPDATE");
+        btnUpdate.setText("EDIT");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateActionPerformed(evt);
@@ -100,13 +102,14 @@ public class manager extends javax.swing.JFrame {
             }
         });
 
-        cmbTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BUS", "ROUTE", " " }));
+        cmbTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BUS", "ROUTE", "EVENT" }));
         cmbTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 cmbTableMouseEntered(evt);
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Choose table");
 
         btnSelect.setText("Show table");
@@ -122,6 +125,8 @@ public class manager extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setLabelFor(tftSearch);
         jLabel3.setText("Search");
 
         btnReturn.setText("Return");
@@ -131,7 +136,7 @@ public class manager extends javax.swing.JFrame {
             }
         });
 
-        tblManager1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -142,92 +147,86 @@ public class manager extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblManager1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblManager1MouseClicked(evt);
+                tblCustomerMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tblManager1);
+        jScrollPane2.setViewportView(tblCustomer);
 
-        jLabel5.setFont(new java.awt.Font("Sitka Text", 3, 18)); // NOI18N
-        jLabel5.setText("Customer");
+        jbManager.setFont(new java.awt.Font("Sitka Text", 3, 18)); // NOI18N
+        jbManager.setText("MANAGER");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                    .addComponent(btnReturn, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(tftSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(53, 53, 53))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(cmbElement, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmbTable, javax.swing.GroupLayout.Alignment.LEADING, 0, 115, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(29, Short.MAX_VALUE))))
+                            .addComponent(btnReturn)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInsert, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(229, 229, 229)
+                                .addComponent(jbManager, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tftSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbTable, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbElement, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReturn))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(tftSearch)
-                        .addGap(18, 18, 18))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(cmbTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(cmbElement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)))
-                .addComponent(btnSelect)
+                    .addComponent(btnReturn)
+                    .addComponent(jbManager))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cmbTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbElement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelect))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(tftSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(35, 35, 35)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -235,14 +234,18 @@ public class manager extends javax.swing.JFrame {
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         // TODO add your handling code here:
-        if (cmbTable.getSelectedIndex() == 0) {
-            insert_branch_window newAddWindow = new insert_branch_window(acc,pass);
-            newAddWindow.setVisible(true);
-        } else if (cmbTable.getSelectedIndex() == 1) {
-            employee_function_window newAddWindow = new employee_function_window(1,acc,pass);
-            newAddWindow.setVisible(true);
+        switch (cmbTable.getSelectedIndex()) {
+            case 0:
+                InsertBus newBus = new InsertBus();
+                newBus.setVisible(true);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                break;
         }
-
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -254,10 +257,12 @@ public class manager extends javax.swing.JFrame {
             string += tableModel.getColumnName(i) + "='" + tableModel.getValueAt(row, i).toString() + "' and ";
         }
         string = (String) string.subSequence(0, string.length() - 4) + ";";
-        updateOrDisplayTable("delete from bank_system." + cmbTable.getSelectedItem().toString() + " where " + string, btnDelete.getText());
-        btnSelectActionPerformed(evt);
-        JOptionPane.showConfirmDialog(rootPane, "Are you sure about that ?");
+        int result = JOptionPane.showConfirmDialog(rootPane, "Are you sure about that ?", "Confirm", JOptionPane.YES_NO_OPTION);
         //System.out.println("delete from "+cbxOfTuples.getSelectedItem().toString()+" where "+ string);
+        if (result == JOptionPane.YES_NO_OPTION) {
+            updateOrDisplayTable("delete from bus_app." + cmbTable.getSelectedItem().toString() + " where " + string, btnDelete.getText());
+            btnSelectActionPerformed(evt);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
@@ -275,7 +280,7 @@ public class manager extends javax.swing.JFrame {
             //create connection with database
             String url = "jdbc:mysql://localhost:3306/bank_system";
             //create a connection object to register the driver
-            java.sql.Connection con = DriverManager.getConnection(url, acc,pass);
+            java.sql.Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
             //create a statement object
             Statement st = con.createStatement();
             //Create a ResultSet object and store the return object of query execution
@@ -307,7 +312,7 @@ public class manager extends javax.swing.JFrame {
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         // TODO add your handling code here:
-        log_in_window returnWin = new log_in_window();
+        Login returnWin = new Login();
         this.dispose();
         returnWin.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_btnReturnActionPerformed
@@ -323,9 +328,7 @@ public class manager extends javax.swing.JFrame {
         System.out.println(cmbTable.getSelectedIndex());
         switch (cmbTable.getSelectedIndex()) {
             case 0:
-                employee_function_window ud = new employee_function_window(0,acc,pass);
-                ud.readData(string);
-                ud.setVisible(true);
+
             case 1:
 
         }
@@ -333,20 +336,18 @@ public class manager extends javax.swing.JFrame {
         btnSelectActionPerformed(evt);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void tblManager1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblManager1MouseClicked
+    private void tblCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustomerMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblManager1MouseClicked
+    }//GEN-LAST:event_tblCustomerMouseClicked
 
     private void updateOrDisplayTable(String query, String action) {
         try {
             // loading mysql driver class
             Class.forName("com.mysql.cj.jdbc.Driver");
             //create connection with database
-            String url = "jdbc:mysql://localhost:3306/bank_system";
-            String username = "root";
-            String password = "Halazara979489";
+
             //create a connection object to register the driver
-            java.sql.Connection con = DriverManager.getConnection(url, username, password);
+            java.sql.Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
             //create a statement object
             Statement st = con.createStatement();
             //Create a ResultSet object and store the return object of query execution
@@ -396,7 +397,45 @@ public class manager extends javax.swing.JFrame {
      * @param args the command line arguments
      * @throws java.lang.InstantiationException
      */
+    private void showCustomer() {
+        try {
+            // loading mysql driver class
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //create connection with database
+            SqlInfomation newSql = new SqlInfomation();
+            //create a connection object to register the driver
+            java.sql.Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
+            //create a statement object
+            Statement st = con.createStatement();
+            //Create a ResultSet object and store the return object of query execution
+            ResultSet rs;
+            rs = st.executeQuery("select * from user");
+            //Retrieving the result object
+            ResultSetMetaData rsmd = rs.getMetaData();
+            //get number of column
+            int nColumn = rsmd.getColumnCount();
+            // Creating a default table object and typecast out JTable into it
+            DefaultTableModel tblModel = (DefaultTableModel) tblCustomer.getModel();
+            tblModel.setColumnCount(0);
+            tblModel.setRowCount(0);
+            for (int j = 0; j < nColumn;) {
+                // Adding colum name according to metadata information
+                tblModel.addColumn(rsmd.getColumnName(++j));
+            }
+            while (rs.next()) {
+                String Row[] = new String[nColumn + 1];
+                for (int i = 0; i < nColumn; i++) {
+                    Row[i] = rs.getString(i + 1);
+                }
+                tblModel.addRow(Row);
+            }
+            con.close();
+        } catch (Exception e) {
+            String error = e.toString();
+            JOptionPane.showMessageDialog(tblManager, error);
 
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
@@ -408,11 +447,11 @@ public class manager extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel jbManager;
+    private javax.swing.JTable tblCustomer;
     private javax.swing.JTable tblManager;
-    private javax.swing.JTable tblManager1;
     private javax.swing.JTextField tftSearch;
     // End of variables declaration//GEN-END:variables
 }
