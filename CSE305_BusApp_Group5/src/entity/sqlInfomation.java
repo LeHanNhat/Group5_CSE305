@@ -8,13 +8,13 @@ package entity;
  *
  * @author Asus
  */
-public class sqlInfomation {
+public class SqlInfomation {
 
     private String url;
     private String acc;
     private String pass;
 
-    public sqlInfomation() {
+    public SqlInfomation() {
         this.url = "jdbc:mysql://localhost:3306/bus_app";
         this.acc = "root";
         this.pass = "Halazara979489";

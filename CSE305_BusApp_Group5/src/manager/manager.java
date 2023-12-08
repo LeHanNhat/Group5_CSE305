@@ -5,6 +5,7 @@
 package manager;
 
 import accountSite.*;
+import bus.InsertBus;
 import entity.*;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -16,19 +17,19 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Administrator
  */
-public class manager extends javax.swing.JFrame {
+public class Manager extends javax.swing.JFrame {
 
-    private String acc;
-    private String pass;
+    private SqlInfomation newSql;
     private App_Manager manager1;
 
     /**
      * Creates new form main_window
      */
-    public manager(App_Manager manager) {
+    public Manager(App_Manager manager) {
         initComponents();
         this.manager1 = manager;
-        this.jbManager.setText("Manager "+manager1.getName());
+        this.newSql = new SqlInfomation();
+        this.jbManager.setText("Manager " + manager1.getName());
     }
 
     /**
@@ -46,10 +47,10 @@ public class manager extends javax.swing.JFrame {
         btnInsert = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        cmbTable = new javax.swing.JComboBox<String>();
+        cmbTable = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         btnSelect = new javax.swing.JToggleButton();
-        cmbElement = new javax.swing.JComboBox<String>();
+        cmbElement = new javax.swing.JComboBox<>();
         tftSearch = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btnReturn = new javax.swing.JButton();
@@ -87,7 +88,7 @@ public class manager extends javax.swing.JFrame {
             }
         });
 
-        btnUpdate.setText("UPDATE");
+        btnUpdate.setText("EDIT");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateActionPerformed(evt);
@@ -101,7 +102,7 @@ public class manager extends javax.swing.JFrame {
             }
         });
 
-        cmbTable.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "BUS", "ROUTE", "EVENT" }));
+        cmbTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BUS", "ROUTE", "EVENT" }));
         cmbTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 cmbTableMouseEntered(evt);
@@ -233,12 +234,18 @@ public class manager extends javax.swing.JFrame {
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         // TODO add your handling code here:
-        if (cmbTable.getSelectedIndex() == 0) {
-
-        } else if (cmbTable.getSelectedIndex() == 1) {
-
+        switch (cmbTable.getSelectedIndex()) {
+            case 0:
+                InsertBus newBus = new InsertBus();
+                newBus.setVisible(true);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                break;
         }
-
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -250,10 +257,12 @@ public class manager extends javax.swing.JFrame {
             string += tableModel.getColumnName(i) + "='" + tableModel.getValueAt(row, i).toString() + "' and ";
         }
         string = (String) string.subSequence(0, string.length() - 4) + ";";
-        updateOrDisplayTable("delete from bank_system." + cmbTable.getSelectedItem().toString() + " where " + string, btnDelete.getText());
-        btnSelectActionPerformed(evt);
-        JOptionPane.showConfirmDialog(rootPane, "Are you sure about that ?");
+        int result = JOptionPane.showConfirmDialog(rootPane, "Are you sure about that ?", "Confirm", JOptionPane.YES_NO_OPTION);
         //System.out.println("delete from "+cbxOfTuples.getSelectedItem().toString()+" where "+ string);
+        if (result == JOptionPane.YES_NO_OPTION) {
+            updateOrDisplayTable("delete from bus_app." + cmbTable.getSelectedItem().toString() + " where " + string, btnDelete.getText());
+            btnSelectActionPerformed(evt);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
@@ -271,7 +280,7 @@ public class manager extends javax.swing.JFrame {
             //create connection with database
             String url = "jdbc:mysql://localhost:3306/bank_system";
             //create a connection object to register the driver
-            java.sql.Connection con = DriverManager.getConnection(url, acc, pass);
+            java.sql.Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
             //create a statement object
             Statement st = con.createStatement();
             //Create a ResultSet object and store the return object of query execution
@@ -319,7 +328,7 @@ public class manager extends javax.swing.JFrame {
         System.out.println(cmbTable.getSelectedIndex());
         switch (cmbTable.getSelectedIndex()) {
             case 0:
-                
+
             case 1:
 
         }
@@ -336,7 +345,7 @@ public class manager extends javax.swing.JFrame {
             // loading mysql driver class
             Class.forName("com.mysql.cj.jdbc.Driver");
             //create connection with database
-            sqlInfomation newSql = new sqlInfomation();
+
             //create a connection object to register the driver
             java.sql.Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
             //create a statement object
@@ -388,7 +397,45 @@ public class manager extends javax.swing.JFrame {
      * @param args the command line arguments
      * @throws java.lang.InstantiationException
      */
+    private void showCustomer() {
+        try {
+            // loading mysql driver class
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //create connection with database
+            SqlInfomation newSql = new SqlInfomation();
+            //create a connection object to register the driver
+            java.sql.Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
+            //create a statement object
+            Statement st = con.createStatement();
+            //Create a ResultSet object and store the return object of query execution
+            ResultSet rs;
+            rs = st.executeQuery("select * from user");
+            //Retrieving the result object
+            ResultSetMetaData rsmd = rs.getMetaData();
+            //get number of column
+            int nColumn = rsmd.getColumnCount();
+            // Creating a default table object and typecast out JTable into it
+            DefaultTableModel tblModel = (DefaultTableModel) tblCustomer.getModel();
+            tblModel.setColumnCount(0);
+            tblModel.setRowCount(0);
+            for (int j = 0; j < nColumn;) {
+                // Adding colum name according to metadata information
+                tblModel.addColumn(rsmd.getColumnName(++j));
+            }
+            while (rs.next()) {
+                String Row[] = new String[nColumn + 1];
+                for (int i = 0; i < nColumn; i++) {
+                    Row[i] = rs.getString(i + 1);
+                }
+                tblModel.addRow(Row);
+            }
+            con.close();
+        } catch (Exception e) {
+            String error = e.toString();
+            JOptionPane.showMessageDialog(tblManager, error);
 
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;

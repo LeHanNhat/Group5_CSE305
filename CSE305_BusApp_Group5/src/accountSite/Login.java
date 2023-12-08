@@ -4,12 +4,16 @@
  */
 package accountSite;
 
-import java.awt.CardLayout;
+import entity.App_Manager;
+import entity.SqlInfomation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import manager.Manager;
+
 /**
  *
  * @author LEONOVO
@@ -19,12 +23,14 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    private SqlInfomation newSql;
     private String adclass;
+    private App_Manager managerLogin;
 
-    private Login() {
+    public Login() {
         initComponents();
-             addListener();
-           
+        addListener();
+        this.newSql = new SqlInfomation();
     }
 
     /**
@@ -159,31 +165,34 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_showPasswordCheckBoxActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-      if(cmbRole.getSelectedIndex()==0){
-          Register_user_dialog register_user=new Register_user_dialog(this, true);
-          register_user.setVisible(true);
-      }else{
-       Register_dialog register=new Register_dialog(this, true);
-      register.setVisible(true);
-      }
+        if (cmbRole.getSelectedIndex() == 0) {
+            Register_user_dialog register_user = new Register_user_dialog(this, true);
+            register_user.setVisible(true);
+        } else {
+            Register_dialog register = new Register_dialog(this, true);
+            register.setVisible(true);
+        }
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-      char[] password= passwordField.getPassword();
-      String passString=new String(password);
-       if(cmbRole.getSelectedIndex()==0){
-        if( loginValidation("root", "mysql",userNameTextFields.getText(), passString)){
-            System.out.println("login done");
-        }else{
-           System.out.println("login Error"); 
+        char[] password = passwordField.getPassword();
+        String passString = new String(password);
+        if (cmbRole.getSelectedIndex() == 0) {
+            if (loginValidation("root", "mysql", userNameTextFields.getText(), passString)) {
+                System.out.println("login done");
+            } else {
+                System.out.println("login Error");
+            }
+        } else {
+            if (loginValidationManager("root", "mysql", userNameTextFields.getText())) {
+                JOptionPane.showMessageDialog(this, "Login successfull");
+                Manager openManager = new Manager(managerLogin);
+                openManager.setVisible(rootPaneCheckingEnabled);
+                System.out.println("login done");
+            } else {
+                System.out.println("login Error");
+            }
         }
-       }else{
-            if( loginValidationManager("root", "mysql",userNameTextFields.getText())){
-            System.out.println("login done");
-        }else{
-           System.out.println("login Error"); 
-        }
-       }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
@@ -191,15 +200,15 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
-         if(cmbRole.getSelectedIndex()==1){
-                 passwordField.setVisible(false);
-                 Password.setVisible(false);
-                 showPasswordCheckBox.setVisible(false);
-             }else{
+        if (cmbRole.getSelectedIndex() == 1) {
+            passwordField.setVisible(false);
+            Password.setVisible(false);
+            showPasswordCheckBox.setVisible(false);
+        } else {
             passwordField.setVisible(true);
-                 Password.setVisible(true);
-                 showPasswordCheckBox.setVisible(true);
-         }
+            Password.setVisible(true);
+            showPasswordCheckBox.setVisible(true);
+        }
     }//GEN-LAST:event_cmbRoleActionPerformed
     public void addListener() {
         showPasswordCheckBox.addActionListener(new ActionListener() {
@@ -218,31 +227,32 @@ public class Login extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/project";
-         Connection con = DriverManager.getConnection(url, acc, pass);
+            Connection con = DriverManager.getConnection(url, acc, pass);
             con.close();
         } catch (Exception e) {
             return false;
         }
         return true;
     }
-    private boolean loginValidation(String acc, String pass,String userName,String password){
-        boolean condition=true;  
+
+    private boolean loginValidation(String acc, String pass, String userName, String password) {
+        boolean condition = true;
         try {
-              String query = "SELECT * FROM bus_app.user WHERE name=? AND password=?";
+            String query = "SELECT * FROM bus_app.user WHERE name=? AND password=?";
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/bus_app";
-         Connection con = DriverManager.getConnection(url, acc, pass);
-         PreparedStatement st=con.prepareStatement(query);
-         st.setString(1, userName);
-         st.setString(2, password);
-             ResultSet rs= st.executeQuery();
-             if(rs.next()){
-                 System.out.println("have");
-                 condition=true;
-             }else{
-                 System.out.println("dont have");
-                 condition=false;
-             }
+            Connection con = DriverManager.getConnection(url, acc, pass);
+            PreparedStatement st = con.prepareStatement(query);
+            st.setString(1, userName);
+            st.setString(2, password);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                System.out.println("have");
+                condition = true;
+            } else {
+                System.out.println("dont have");
+                condition = false;
+            }
             con.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -250,27 +260,31 @@ public class Login extends javax.swing.JFrame {
         }
         return condition;
     }
-    private boolean loginValidationManager(String acc,String pass,String name){
-        boolean condition=true;  
+
+    private boolean loginValidationManager(String acc, String pass, String name) {
+        boolean condition = true;
         try {
-              String query = "SELECT * FROM bus_app.manager WHERE name=?";
+            String query = "SELECT * FROM bus_app.manager WHERE name=?";
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/bus_app";
-         Connection con = DriverManager.getConnection(url, acc, pass);
-         PreparedStatement st=con.prepareStatement(query);
-         st.setString(1, name);
-        
-             ResultSet rs= st.executeQuery();
-             if(rs.next()){
-                 System.out.println("have");
-                 condition=true;
-             }else{
-                 System.out.println("dont have");
-                 condition=false;
-             }
+//            String url = "jdbc:mysql://localhost:3306/bus_app";
+            Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
+            PreparedStatement st = con.prepareStatement(query);
+            st.setString(1, name);
+
+            ResultSet rs = st.executeQuery();
+            
+            if (rs.next()) {
+                System.out.println("have");
+                ResultSet tempRS = st.executeQuery();
+                setManagerLogin(tempRS);
+                condition = true;
+            } else {
+                System.out.println("dont have");
+                condition = false;
+            }
             con.close();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.toString());
             return false;
         }
         return condition;
@@ -309,6 +323,23 @@ public class Login extends javax.swing.JFrame {
                 new Login().setVisible(true);
             }
         });
+    }
+
+    private void setManagerLogin(ResultSet rs) {
+        try {
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int nColumn = rsmd.getColumnCount();
+            String data[] = new String[nColumn + 1];
+            while (rs.next()) {
+                for (int i = 0; i < nColumn; i++) {
+                    data[i] = rs.getString(i + 1);
+                }
+            }
+            this.managerLogin = new App_Manager(data[0], data[1], data[2]);
+            System.out.println(managerLogin.getName()+" "+managerLogin.getDob());
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
