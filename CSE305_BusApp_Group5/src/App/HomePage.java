@@ -9,18 +9,21 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
-
+import accountSite.Login;
 /**
  *
  * @author LEONOVO
  */
 public class HomePage extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form HomePage
      */
-    public HomePage() {
+    private String userName;
+    public HomePage(String userName) {
         initComponents();
+       this.userName=userName;
+       this.userLabel.setText(userName);
     }
 
     /**
@@ -228,7 +231,7 @@ public class HomePage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HomePage().setVisible(true);
+                new HomePage("").setVisible(true);
             }
         });
     }

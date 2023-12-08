@@ -180,7 +180,7 @@ public class Login extends javax.swing.JFrame {
         if (cmbRole.getSelectedIndex() == 0) {
             if (loginValidation("root", "123456789", userNameTextFields.getText(), passString)) {
                 System.out.println("login done");
-                HomePage home = new HomePage();
+                HomePage home = new HomePage(userNameTextFields.getText());
                 this.setVisible(false);
                 home.setVisible(true);
             } else {
