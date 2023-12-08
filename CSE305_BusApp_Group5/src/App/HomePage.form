@@ -24,30 +24,25 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="payButton" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
+                  <Component id="BookingButton" min="-2" pref="132" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="userLabel" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jButton1" max="32767" attributes="0"/>
-                  <Component id="BookingButton" alignment="0" max="32767" attributes="0"/>
-                  <Component id="payButton" max="32767" attributes="0"/>
-                  <Component id="ocassionsButton" max="32767" attributes="0"/>
-                  <Component id="jButton2" pref="132" max="32767" attributes="0"/>
+                  <Component id="ocassionsButton" min="-2" pref="132" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane2" min="-2" pref="547" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="startComboBox" min="-2" pref="119" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                              <Component id="stopComboBox" min="-2" pref="117" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="startComboBox" min="-2" pref="251" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
                               <Component id="Searchbutton" min="-2" pref="109" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
@@ -59,9 +54,14 @@
                               <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="587" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="14" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,7 +73,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="startComboBox" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="stopComboBox" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="userLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="Searchbutton" max="32767" attributes="0"/>
@@ -85,16 +84,12 @@
                   <Component id="searchButton2" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jButton1" min="-2" pref="52" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="66" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="payButton" min="-2" pref="72" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="BookingButton" min="-2" pref="53" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="ocassionsButton" min="-2" pref="69" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane2" min="-2" pref="387" max="-2" attributes="0"/>
@@ -113,26 +108,10 @@
     <Component class="javax.swing.JComboBox" name="startComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="stopComboBox">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
+          <StringArray count="3">
+            <StringItem index="0" value="bus"/>
+            <StringItem index="1" value="route"/>
+            <StringItem index="2" value="booking_info"/>
           </StringArray>
         </Property>
       </Properties>
@@ -142,8 +121,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="Searchbutton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Search"/>
+        <Property name="text" type="java.lang.String" value="Show"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SearchbuttonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="userLabel">
     </Component>
@@ -165,11 +147,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="INSERT BUS"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="BookingButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="BOOKING"/>
@@ -195,11 +172,6 @@
     <Component class="javax.swing.JButton" name="ocassionsButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="OCASSIONS"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="INSERT ROUTES"/>
       </Properties>
     </Component>
   </SubComponents>
