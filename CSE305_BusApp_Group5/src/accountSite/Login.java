@@ -183,7 +183,7 @@ public class Login extends javax.swing.JFrame {
                 System.out.println("login Error");
             }
         } else {
-            if (loginValidationManager("root", "mysql", userNameTextFields.getText())) {
+            if (loginValidationManager("root", "mysql", userNameTextFields.getText(), passString)) {
                 System.out.println("login done");
             } else {
                 System.out.println("login Error");
@@ -257,16 +257,16 @@ public class Login extends javax.swing.JFrame {
         return condition;
     }
 
-    private boolean loginValidationManager(String acc, String pass, String name) {
+    private boolean loginValidationManager(String acc, String pass, String name, String dob) {
         boolean condition = true;
         try {
-            String query = "SELECT * FROM bus_app.manager WHERE name=?";
+            String query = "SELECT * FROM bus_app.manager WHERE name=? AND dob=?";
             Class.forName("com.mysql.cj.jdbc.Driver");
 //            String url = "jdbc:mysql://localhost:3306/bus_app";
             Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
             PreparedStatement st = con.prepareStatement(query);
             st.setString(1, name);
-
+            st.setString(2, dob);
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
