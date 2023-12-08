@@ -6,7 +6,8 @@ package accountSite;
 
 import entity.App_Manager;
 import entity.SqlInfomation;
-
+import App.HomePage;
+import manager.Manager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -177,13 +178,19 @@ public class Login extends javax.swing.JFrame {
         char[] password = passwordField.getPassword();
         String passString = new String(password);
         if (cmbRole.getSelectedIndex() == 0) {
-            if (loginValidation("root", "mysql", userNameTextFields.getText(), passString)) {
+            if (loginValidation("root", "123456789", userNameTextFields.getText(), passString)) {
                 System.out.println("login done");
+                HomePage home = new HomePage();
+                this.setVisible(false);
+                home.setVisible(true);
             } else {
                 System.out.println("login Error");
+                Manager m = new Manager(managerLogin);
+                this.setVisible(false);
+                m.setVisible(true);
             }
         } else {
-            if (loginValidationManager("root", "mysql", userNameTextFields.getText(), passString)) {
+            if (loginValidationManager("root", "123456789", userNameTextFields.getText(), passString)) {
                 System.out.println("login done");
             } else {
                 System.out.println("login Error");

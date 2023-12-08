@@ -235,7 +235,7 @@ private boolean registerUser(String acc, String pass, String user_Id, String nam
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         char[] pass=password.getPassword();
         String passString=new String(pass);
-        if(registerUser("root", "mysql", txtUser_ID.getText(), txtName.getText(),
+        if(registerUser("root", "123456789", txtUser_ID.getText(), txtName.getText(),
             passString, txtdob.getText(), txtPhone.getText())){
         System.out.println("Done");
         }else{
