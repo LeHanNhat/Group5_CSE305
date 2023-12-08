@@ -35,7 +35,7 @@
                           <Component id="btnDelete" alignment="1" min="-2" pref="105" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jScrollPane2" min="-2" pref="622" max="-2" attributes="0"/>
@@ -43,8 +43,8 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="229" max="-2" attributes="0"/>
-                              <Component id="jbManager" min="-2" pref="212" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+                              <Component id="jbManager" min="-2" pref="371" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -72,12 +72,12 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnReturn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbManager" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbManager" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmbTable" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -105,7 +105,7 @@
                   <Component id="jScrollPane2" min="-2" pref="171" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <EmptySpace pref="30" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -261,9 +261,10 @@
     <Component class="javax.swing.JLabel" name="jbManager">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Sitka Text" size="18" style="3"/>
+          <Font name="Sitka Text" size="36" style="3"/>
         </Property>
         <Property name="text" type="java.lang.String" value="MANAGER"/>
+        <Property name="verticalAlignment" type="int" value="3"/>
       </Properties>
     </Component>
   </SubComponents>
