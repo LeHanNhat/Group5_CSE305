@@ -14,4 +14,5 @@
  
  -Occasions(ID, Date,Events)
 
+-booking_info(User-ID,name,dept,boooking date,booking tilldate)
  
