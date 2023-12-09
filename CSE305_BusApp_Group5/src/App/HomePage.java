@@ -23,7 +23,7 @@ public class HomePage extends javax.swing.JFrame {
     public HomePage(String userName) {
         initComponents();
        this.userName=userName;
-       this.jLabel1.setText("Welcome"+userName);
+       this.jLabel1.setText("Welcome, "+userName);
     }
 
     /**
