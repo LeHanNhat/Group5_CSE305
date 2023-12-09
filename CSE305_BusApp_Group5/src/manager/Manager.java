@@ -30,6 +30,7 @@ public class Manager extends javax.swing.JFrame {
      */
     public Manager(App_Manager manager) {
         initComponents();
+        showCustomer();
         this.manager1 = manager;
         this.newSql = new SqlInfomation();
         this.jbManager.setText("Manager " + manager1.getName());
@@ -122,6 +123,11 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
+        tftSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tftSearchActionPerformed(evt);
+            }
+        });
         tftSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tftSearchKeyPressed(evt);
@@ -348,6 +354,10 @@ public class Manager extends javax.swing.JFrame {
     private void tblCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustomerMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tblCustomerMouseClicked
+
+    private void tftSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tftSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tftSearchActionPerformed
 
     private void updateOrDisplayTable(String query, String action) {
         try {
