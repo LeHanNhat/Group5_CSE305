@@ -57,7 +57,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("BUS APP");
 
-        jLabel2.setText("UserName:");
+        jLabel2.setText("User_ID:");
 
         userNameTextFields.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,15 +200,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
-        if (cmbRole.getSelectedIndex() == 1) {
-            passwordField.setVisible(false);
-            Password.setVisible(false);
-            showPasswordCheckBox.setVisible(false);
-        } else {
-            passwordField.setVisible(true);
-            Password.setVisible(true);
-            showPasswordCheckBox.setVisible(true);
-        }
+       
     }//GEN-LAST:event_cmbRoleActionPerformed
     public void addListener() {
         showPasswordCheckBox.addActionListener(new ActionListener() {
@@ -235,15 +227,15 @@ public class Login extends javax.swing.JFrame {
         return true;
     }
 
-    private boolean loginValidation(String acc, String pass, String userName, String password) {
+    private boolean loginValidation(String acc, String pass, String user_Id, String password) {
         boolean condition = true;
         try {
-            String query = "SELECT * FROM bus_app.user WHERE name=? AND password=?";
+            String query = "SELECT * FROM bus_app.user WHERE user_Id=? AND password=?";
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/bus_app";
             Connection con = DriverManager.getConnection(url, acc, pass);
             PreparedStatement st = con.prepareStatement(query);
-            st.setString(1, userName);
+            st.setString(1, user_Id);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
