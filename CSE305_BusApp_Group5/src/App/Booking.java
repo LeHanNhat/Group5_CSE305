@@ -4,6 +4,11 @@
  */
 package App;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LEONOVO
@@ -202,7 +207,11 @@ public class Booking extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBookingTillDateActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if(booking(txtUser_ID.getText(), txtName.getText(), txtdept.getText(), txtBookingDate.getText(), txtBookingTillDate.getText())){
+            JOptionPane.showMessageDialog(rootPane, "Booking Success! We will contact you soon");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Try again");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -220,6 +229,26 @@ public class Booking extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    private boolean booking( String user_Id, String name, String dept, String booking_date, String booking_tilldate) {
+        try {
+            String query = "insert into bus_app.booking(user_ID,name,dept,booking_date,booking_tilldate) values (?,?,?,?,?);";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/bus_app";
+            Connection con = DriverManager.getConnection(url, "root", "123456789");
+            PreparedStatement st = con.prepareStatement(query);
+            st.setString(1, user_Id);
+            st.setString(2, name);
+            st.setString(3, dept);
+            st.setString(4, booking_date);
+            st.setString(5, booking_tilldate);
+            int rs = st.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
