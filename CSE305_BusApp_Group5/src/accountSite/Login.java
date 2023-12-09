@@ -165,13 +165,10 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_showPasswordCheckBoxActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        if (cmbRole.getSelectedIndex() == 0) {
+        
             Register_user_dialog register_user = new Register_user_dialog(this, true);
             register_user.setVisible(true);
-        } else {
-            Register_dialog register = new Register_dialog(this, true);
-            register.setVisible(true);
-        }
+        
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
