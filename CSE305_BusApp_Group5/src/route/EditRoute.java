@@ -4,7 +4,6 @@
  */
 package route;
 
-import bus.*;
 import entity.SqlInfomation;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -13,16 +12,17 @@ import javax.swing.JOptionPane;
  *
  * @author Administrator
  */
-public class InsertRoute extends javax.swing.JFrame {
+public class EditRoute extends javax.swing.JFrame {
 
     private SqlInfomation newSql;
 
     /**
      * Creates new form insert_window
      */
-    public InsertRoute() {
+    public EditRoute(String[] data) {
         initComponents();
         this.newSql = new SqlInfomation();
+        readRoute(data);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
@@ -59,7 +59,6 @@ public class InsertRoute extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtDateExecute = new javax.swing.JTextField();
         jLAlarm2 = new javax.swing.JLabel();
-        jLAlarm1 = new javax.swing.JLabel();
 
         jLabel4.setText("Distance");
 
@@ -69,11 +68,16 @@ public class InsertRoute extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        txtRouteId.setEditable(false);
         txtRouteId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRouteIdActionPerformed(evt);
             }
         });
+
+        txtStartAt.setEditable(false);
+
+        txtStopAt.setEditable(false);
 
         jLabel1.setText("Route ID");
 
@@ -81,7 +85,7 @@ public class InsertRoute extends javax.swing.JFrame {
 
         jLabel6.setText("Start");
 
-        btnSubmit.setText("SUBMIT");
+        btnSubmit.setText("UPDATE");
         btnSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubmitActionPerformed(evt);
@@ -89,7 +93,7 @@ public class InsertRoute extends javax.swing.JFrame {
         });
 
         jLabel11.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 14)); // NOI18N
-        jLabel11.setText("INSERT ROUTE");
+        jLabel11.setText("EDIT BUS INFOMATION");
 
         btnClear.setText("CLEAR");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -100,11 +104,7 @@ public class InsertRoute extends javax.swing.JFrame {
 
         jLabel3.setText("Distance");
 
-        txtDistance.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDistanceKeyTyped(evt);
-            }
-        });
+        txtDistance.setEditable(false);
 
         jLabel5.setText("Duration");
 
@@ -120,27 +120,13 @@ public class InsertRoute extends javax.swing.JFrame {
 
         jLAlarm2.setText("Must enter number");
 
-        jLAlarm1.setText("Must enter number");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(85, 85, 85))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnSubmit)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLAlarm1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLAlarm2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel10)
@@ -171,6 +157,17 @@ public class InsertRoute extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(51, 51, 51))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSubmit)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,8 +190,6 @@ public class InsertRoute extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDistance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(5, 5, 5)
-                .addComponent(jLAlarm1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -213,7 +208,7 @@ public class InsertRoute extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClear)
                     .addComponent(btnSubmit))
-                .addGap(19, 19, 19))
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -243,21 +238,12 @@ public class InsertRoute extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRouteIdActionPerformed
 
-    private void txtDistanceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDistanceKeyTyped
-        // TODO add your handling code here:
-        if (validateNumber(this.txtDistance.getText())) {
-            this.jLAlarm1.setText("Acceptable");
-        } else {
-            this.jLAlarm1.setText("Invalid value");
-        }
-    }//GEN-LAST:event_txtDistanceKeyTyped
-
     private void txtPriceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyTyped
         // TODO add your handling code here:
         if (validateNumber(this.txtPrice.getText())) {
-            this.jLAlarm1.setText("Acceptable");
+            this.jLAlarm2.setText("Acceptable");
         } else {
-            this.jLAlarm1.setText("Invalid value");
+            this.jLAlarm2.setText("Invalid value");
         }
     }//GEN-LAST:event_txtPriceKeyTyped
 
@@ -281,33 +267,31 @@ public class InsertRoute extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     private StringBuilder returnQuery() {
-        StringBuilder sb = new StringBuilder("insert into route values('");
-        sb.append(txtRouteId.getText().trim() + "',");
-        sb.append("'" + txtStartAt.getText().trim() + "',");
-        sb.append("'" + txtStopAt.getText().trim() + "',");
-        sb.append(txtDistance.getText().trim() + ",");
-        sb.append("'" + txtDuration.getText().trim() + "',");
-        sb.append(txtPrice.getText().trim() + ",");
-        sb.append("'" + txtDateExecute.getText().trim() + "')");
+        StringBuilder sb = new StringBuilder("update route set duration=");
+        sb.append(txtDuration.getText().trim() + ",price='");
+        sb.append(txtPrice.getText().trim() + "',date_available=");
+        sb.append("'" + txtDateExecute.getText().trim() + "' where route_ID='" + txtRouteId.getText().trim() + "';");
         return sb;
     }
 
     private void doClear() {
-        this.txtRouteId.setText("");
-        this.txtStartAt.setText("");
-        this.txtStopAt.setText("");
-        this.txtDistance.setText("");
         this.txtDuration.setText("");
         this.txtPrice.setText("");
         this.txtDateExecute.setText("");
     }
     
-    
-
+    public void readRoute(String[] str) {
+        this.txtRouteId.setText(str[0]);
+        this.txtStartAt.setText(str[1]);
+        this.txtStopAt.setText(str[2]);
+        this.txtDistance.setText(str[3]);
+        this.txtDuration.setText(str[4]);
+        this.txtPrice.setText(str[5]);
+        this.txtDateExecute.setText(str[6]);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnSubmit;
-    private javax.swing.JLabel jLAlarm1;
     private javax.swing.JLabel jLAlarm2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

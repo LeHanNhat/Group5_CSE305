@@ -165,10 +165,10 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_showPasswordCheckBoxActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        
-            Register_user_dialog register_user = new Register_user_dialog(this, true);
-            register_user.setVisible(true);
-        
+
+        Register_user_dialog register_user = new Register_user_dialog(this, true);
+        register_user.setVisible(true);
+
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
@@ -182,13 +182,14 @@ public class Login extends javax.swing.JFrame {
                 home.setVisible(true);
             } else {
                 System.out.println("login Error");
-                Manager m = new Manager(managerLogin);
-                this.setVisible(false);
-                m.setVisible(true);
+
             }
         } else {
             if (loginValidationManager("root", "123456789", userNameTextFields.getText(), passString)) {
                 System.out.println("login done");
+                Manager m = new Manager(managerLogin);
+                this.setVisible(false);
+                m.setVisible(true);
             } else {
                 System.out.println("login Error");
             }
@@ -200,7 +201,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
-       
+
     }//GEN-LAST:event_cmbRoleActionPerformed
     public void addListener() {
         showPasswordCheckBox.addActionListener(new ActionListener() {
