@@ -175,7 +175,7 @@ public class Login extends javax.swing.JFrame {
         char[] password = passwordField.getPassword();
         String passString = new String(password);
         if (cmbRole.getSelectedIndex() == 0) {
-            if (loginValidation("root", "123456789", userNameTextFields.getText(), passString)) {
+            if (loginValidation(userNameTextFields.getText(), passString)) {
                 System.out.println("login done");
                 HomePage home = new HomePage(userNameTextFields.getText());
                 this.setVisible(false);
@@ -185,7 +185,7 @@ public class Login extends javax.swing.JFrame {
 
             }
         } else {
-            if (loginValidationManager("root", "123456789", userNameTextFields.getText(), passString)) {
+            if (loginValidationManager(userNameTextFields.getText(), passString)) {
                 System.out.println("login done");
                 Manager m = new Manager(managerLogin);
                 this.setVisible(false);
@@ -216,11 +216,11 @@ public class Login extends javax.swing.JFrame {
         });
     }
 
-    private boolean checkConnection(String acc, String pass) throws ClassNotFoundException {
+    private boolean checkConnection() throws ClassNotFoundException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/project";
-            Connection con = DriverManager.getConnection(url, acc, pass);
+            Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
             con.close();
         } catch (Exception e) {
             return false;
@@ -228,13 +228,12 @@ public class Login extends javax.swing.JFrame {
         return true;
     }
 
-    private boolean loginValidation(String acc, String pass, String user_Id, String password) {
+    private boolean loginValidation(String user_Id, String password) {
         boolean condition = true;
         try {
             String query = "SELECT * FROM bus_app.user WHERE user_Id=? AND password=?";
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/bus_app";
-            Connection con = DriverManager.getConnection(url, acc, pass);
+            Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
             PreparedStatement st = con.prepareStatement(query);
             st.setString(1, user_Id);
             st.setString(2, password);
@@ -254,7 +253,7 @@ public class Login extends javax.swing.JFrame {
         return condition;
     }
 
-    private boolean loginValidationManager(String acc, String pass, String name, String dob) {
+    private boolean loginValidationManager(String name, String dob) {
         boolean condition = true;
         try {
             String query = "SELECT * FROM bus_app.manager WHERE name=? AND dob=?";
