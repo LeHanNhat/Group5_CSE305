@@ -17,7 +17,7 @@ public class SqlInfomation {
     public SqlInfomation() {
         this.url = "jdbc:mysql://localhost:3306/bus_app";
         this.acc = "root";
-        this.pass = "Halazara979489";
+        this.pass = "123456789";
     }
 
     public String getUrl() {
