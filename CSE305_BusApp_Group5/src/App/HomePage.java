@@ -10,20 +10,22 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 import accountSite.Login;
+
 /**
  *
  * @author LEONOVO
  */
 public class HomePage extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form HomePage
      */
     private String userName;
+
     public HomePage(String userName) {
         initComponents();
-       this.userName=userName;
-       this.jLabel1.setText("Welcome, "+userName);
+        this.userName = userName;
+        this.jLabel1.setText("Welcome, " + userName);
     }
 
     /**
@@ -52,7 +54,7 @@ public class HomePage extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel1.setText("Welcome,");
 
-        startComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "bus", "route", "booking_info" }));
+        startComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "bus", "route", "booking" }));
 
         Searchbutton.setText("Show");
         Searchbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,8 +77,18 @@ public class HomePage extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         BookingButton.setText("BOOKING");
+        BookingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BookingButtonActionPerformed(evt);
+            }
+        });
 
         payButton.setText("PUCHASE");
+        payButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Bus Stop");
 
@@ -144,10 +156,41 @@ public class HomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SearchbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchbuttonActionPerformed
-        String query = "select * from " + startComboBox.getSelectedItem().toString() + ";";
-        System.out.println(query);
-        DisplayTable(query, "Select");
+        if (startComboBox.getSelectedIndex() == 0) {
+            String query = "SELECT bus.bus_ID, bus.capacity, bus.route_ID,  route.start , route.stop,route.duration, route.price,route.date_available FROM bus_app.bus INNER JOIN bus_app.route on bus.route_ID = route.route_ID;";
+            System.out.println(query);
+            DisplayTable(query, "Select");
+        } else if (startComboBox.getSelectedIndex() == 3) {
+            String query = "SELECT user.user_Id,booking.name, booking.dept,booking.booking_date,booking.booking_tilldate FROM bus_app.user INNER JOIN bus_app.booking on user.user_Id = booking.user_ID where user.user_Id= '"+this.userName+"' ;";
+            System.out.println(query);
+            DisplayTable(query, "Select");
+        } else {
+            String query = "select * from " + startComboBox.getSelectedItem().toString() + ";";
+            System.out.println(query);
+            DisplayTable(query, "Select");
+        }
     }//GEN-LAST:event_SearchbuttonActionPerformed
+
+    private void payButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payButtonActionPerformed
+        int row = jTable1.getSelectedRow();
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        String[] string = new String[tableModel.getColumnCount()];
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            string[i] = tableModel.getValueAt(row, i).toString();
+        }
+
+        Bill bill = new Bill();
+        bill.readData(string);
+        bill.setVisible(true);
+
+
+    }//GEN-LAST:event_payButtonActionPerformed
+
+    private void BookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookingButtonActionPerformed
+        // TODO add your handling code here:
+        Booking book = new Booking();
+        book.setVisible(true);
+    }//GEN-LAST:event_BookingButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,6 +240,7 @@ public class HomePage extends javax.swing.JFrame {
 
         }
     }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
