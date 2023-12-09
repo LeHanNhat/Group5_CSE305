@@ -255,9 +255,9 @@ public class InsertRoute extends javax.swing.JFrame {
     private void txtPriceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyTyped
         // TODO add your handling code here:
         if (validateNumber(this.txtPrice.getText())) {
-            this.jLAlarm1.setText("Acceptable");
+            this.jLAlarm2.setText("Acceptable");
         } else {
-            this.jLAlarm1.setText("Invalid value");
+            this.jLAlarm2.setText("Invalid value");
         }
     }//GEN-LAST:event_txtPriceKeyTyped
 
