@@ -7,11 +7,14 @@ package manager;
 import accountSite.*;
 import bus.InsertBus;
 import entity.*;
+import event.InsertEvent;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import route.EditRoute;
+import route.InsertRoute;
 
 /**
  *
@@ -102,7 +105,7 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        cmbTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BUS", "ROUTE", "EVENT" }));
+        cmbTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BUS", "ROUTE", "EVENT", "BOOKING" }));
         cmbTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 cmbTableMouseEntered(evt);
@@ -241,8 +244,12 @@ public class Manager extends javax.swing.JFrame {
                 newBus.setVisible(true);
                 break;
             case 1:
+                InsertRoute newRoute = new InsertRoute();
+                newRoute.setVisible(true);
                 break;
             case 2:
+                InsertEvent newEvent = new InsertEvent();
+                newEvent.setVisible(true);
                 break;
             default:
                 break;
@@ -329,9 +336,10 @@ public class Manager extends javax.swing.JFrame {
         System.out.println(cmbTable.getSelectedIndex());
         switch (cmbTable.getSelectedIndex()) {
             case 0:
-
+                
             case 1:
-
+                EditRoute editRoute = new EditRoute(string);
+                editRoute.setVisible(rootPaneCheckingEnabled);
         }
 
         btnSelectActionPerformed(evt);
