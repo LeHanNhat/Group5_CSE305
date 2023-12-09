@@ -4,6 +4,7 @@
  */
 package accountSite;
 
+import entity.SqlInfomation;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,13 +24,17 @@ public class Register_user_dialog extends javax.swing.JDialog {
     /**
      * Creates new form Register_user_dialog
      */
+    private SqlInfomation newSql;
+
     public Register_user_dialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setPlaceholder(txtdob,"year-month-day");
+        setPlaceholder(txtdob, "year-month-day");
+        this.newSql = new SqlInfomation();
         addListener();
     }
-      private void setPlaceholder(JTextField textField, String placeholder) {
+
+    private void setPlaceholder(JTextField textField, String placeholder) {
         textField.setForeground(Color.GRAY);
         textField.setText(placeholder);
 
@@ -51,12 +56,12 @@ public class Register_user_dialog extends javax.swing.JDialog {
             }
         });
     }
-private boolean registerUser(String acc, String pass, String user_Id, String name, String password, String dob, String phone) {
+
+    private boolean registerUser(String acc, String pass, String user_Id, String name, String password, String dob, String phone) {
         try {
             String query = "insert into bus_app.user(user_Id, name , password , dob , phone ) value(? , ? , ? , ? , ?);";
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/bus_app";
-            Connection con = DriverManager.getConnection(url, acc, pass);
+            Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
             PreparedStatement st = con.prepareStatement(query);
             st.setString(1, user_Id);
             st.setString(2, name);
@@ -71,6 +76,7 @@ private boolean registerUser(String acc, String pass, String user_Id, String nam
         }
         return true;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -233,12 +239,12 @@ private boolean registerUser(String acc, String pass, String user_Id, String nam
     }//GEN-LAST:event_txtUser_IDActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        char[] pass=password.getPassword();
-        String passString=new String(pass);
-        if(registerUser("root", "123456789", txtUser_ID.getText(), txtName.getText(),
-            passString, txtdob.getText(), txtPhone.getText())){
-        System.out.println("Done");
-        }else{
+        char[] pass = password.getPassword();
+        String passString = new String(pass);
+        if (registerUser("root", "123456789", txtUser_ID.getText(), txtName.getText(),
+                passString, txtdob.getText(), txtPhone.getText())) {
+            System.out.println("Done");
+        } else {
             System.out.println("Error");
         }
     }//GEN-LAST:event_registerButtonActionPerformed
@@ -248,20 +254,21 @@ private boolean registerUser(String acc, String pass, String user_Id, String nam
     }//GEN-LAST:event_txtNameActionPerformed
 
     private void checkShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkShowActionPerformed
-     
+
     }//GEN-LAST:event_checkShowActionPerformed
- public void addListener() {
+    public void addListener() {
         checkShow.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (checkShow.isSelected()) {
                     password.setEchoChar((char) 0);
                 } else {
-                   password.setEchoChar('\u2022');
+                    password.setEchoChar('\u2022');
                 }
             }
         });
     }
+
     /**
      * @param args the command line arguments
      */

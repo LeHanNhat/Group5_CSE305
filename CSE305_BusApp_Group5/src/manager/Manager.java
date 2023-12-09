@@ -286,7 +286,7 @@ public class Manager extends javax.swing.JFrame {
             // loading mysql driver class
             Class.forName("com.mysql.cj.jdbc.Driver");
             //create connection with database
-            String url = "jdbc:mysql://localhost:3306/bank_system";
+            String url = "jdbc:mysql://localhost:3306/bus_app";
             //create a connection object to register the driver
             java.sql.Connection con = DriverManager.getConnection(newSql.getUrl(), newSql.getAcc(), newSql.getPass());
             //create a statement object
