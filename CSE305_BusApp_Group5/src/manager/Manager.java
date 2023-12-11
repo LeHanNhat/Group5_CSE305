@@ -106,7 +106,7 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        cmbTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BUS", "ROUTE", "EVENT", "BOOKING" }));
+        cmbTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BUS", "ROUTE", "BOOKING" }));
         cmbTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 cmbTableMouseEntered(evt);
